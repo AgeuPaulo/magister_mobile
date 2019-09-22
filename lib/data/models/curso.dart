@@ -1,3 +1,4 @@
+import 'package:magister_mobile/data/helpers/helpercurso.dart';
 import 'package:magister_mobile/data/models/professor.dart';
 
 class Curso {
@@ -19,9 +20,29 @@ class Curso {
   int get idCoordenador => this._idCoordenador;
   set idCoordenador(int idCoordenador) => this._idCoordenador = idCoordenador;
 
-  set coordenador(Professor professor){
+  set coordenador(Professor professor) {
     this._coordenador = professor;
     this._idCoordenador = this._coordenador.id;
-  } 
+  }
 
+  Curso.fromMap(Map map){
+    _id = map[HelperCurso.idColumn];
+    _nomeCurso = map[HelperCurso.nomeColumn];
+    _totalCredito = map[HelperCurso.totalCreditoColumn];
+    _idCoordenador = map[HelperCurso.idCoordenadorColumn];
+  }
+
+  Map toMap() {
+    Map<String, dynamic> map = {
+      HelperCurso.nomeColumn: nomeCurso,
+      HelperCurso.totalCreditoColumn: totalCredito,
+      HelperCurso.idCoordenadorColumn: idCoordenador,
+    };
+
+    if(id != null){
+      map[HelperCurso.idColumn] = id;
+    }
+    return map;
+  }
+  
 }
