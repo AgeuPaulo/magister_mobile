@@ -31,7 +31,7 @@ class _EditProfessorState extends State<EditProfessor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.edit ? "Edit Person" : "Add person"),
+        title: Text(widget.edit ? "Editar Professor" : "Novo Professor"),
       ),
       body: Form(
         key: _formKey,

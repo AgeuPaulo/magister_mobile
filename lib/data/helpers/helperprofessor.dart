@@ -1,10 +1,8 @@
 import 'package:magister_mobile/data/helpers/helperbase.dart';
 import 'package:magister_mobile/data/models/professor.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 class HelperProfessor extends HelperBase<Professor> {
-  Database _db;
   static final String professorTable = "tb_professor";
   static final String idColumn = "id";
   static final String nomeColumn = "nome";
@@ -13,27 +11,6 @@ class HelperProfessor extends HelperBase<Professor> {
 
   factory HelperProfessor() => _instance;
   HelperProfessor.getInstance();
-
-  Future<Database> get db async {
-    if (_db != null) {
-      return _db;
-    } else {
-      _db = await createTable();
-      return _db;
-    }
-  }
-
-  @override
-  Future<Database> createTable() async {
-    final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, HelperBase.dataBaseName);
-
-    return await openDatabase(path, version: 1,
-        onCreate: (Database db, int newerVersion) async {
-      await db.execute(
-          "CREATE TABLE IF NOT EXISTS $professorTable($idColumn INTEGER PRIMARY KEY, $nomeColumn TEXT, $matriculaColumn INTEGER)");
-    });
-  }
 
 @override
   Future<Professor> save(Professor professor) async {

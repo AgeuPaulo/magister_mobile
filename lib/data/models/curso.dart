@@ -8,6 +8,13 @@ class Curso {
   int _idCoordenador;
   Professor _coordenador;
 
+  Curso({int id, String nomeCurso, int totalCredito, int idCoordenador}){
+    this._id = id;
+    this._nomeCurso = nomeCurso;
+    this._totalCredito = totalCredito;
+    this._idCoordenador = idCoordenador;
+  }
+
   int get id => this._id;
   set id(int id) => this._id = id;
 
