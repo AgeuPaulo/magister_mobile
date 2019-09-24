@@ -1,5 +1,5 @@
+import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
 import 'package:magister_mobile/data/models/curso.dart';
-import 'package:magister_mobile/data/models/turma.dart';
 
 class Disciplina {
   int _id;
@@ -8,10 +8,18 @@ class Disciplina {
   String _tipo;
   int _hrs;
   int _limiteFaltas;
-  Turma _turma;
   Curso _curso;
+  int _idCurso;
 
-  Disciplina(this._id, this._nomeDisc, this._creditos, this._tipo, this._hrs, this._limiteFaltas, {turma, curso});
+  Disciplina({int id, String nome, int creditos, String tipo, int hrs, int limite, int idCurso}){
+    this._id = id;
+    this._nomeDisc = nome;
+    this._creditos = creditos;
+    this._tipo = tipo;
+    this._hrs = hrs;
+    this._limiteFaltas = limite;
+    this._idCurso = idCurso;
+  }
 
   int get id => this._id;
   set id(int id) => this._id = id;
@@ -31,9 +39,38 @@ class Disciplina {
   int get limiteFaltas => this._limiteFaltas;
   set limiteFaltas(int limiteFaltas) => this._limiteFaltas = limiteFaltas;
 
-  Turma get turma => this._turma;
-  set turma(Turma turma) => this._turma = turma;
+  int get idCurso => this._idCurso;
+  set idCurso(int idCurso) => this._idCurso = idCurso;
 
   Curso get curso => _curso;
-  set curso(Curso curso) => this._curso = curso;
+  set curso(Curso curso) {
+    this._curso = curso;
+    this._idCurso = this._curso.id;
+  }
+  Disciplina.fromMap(Map map){
+    _id = map[HelperDisciplina.idColumn];
+    _nomeDisc = map[HelperDisciplina.nomeColumn];
+    _creditos = map[HelperDisciplina.creditosColumn];
+    _tipo = map[HelperDisciplina.tipoColumn];
+    _hrs = map[HelperDisciplina.hrsObgColumn];
+    _limiteFaltas = map[HelperDisciplina.limiteColumn];
+    _idCurso = map[HelperDisciplina.idCursoColumn];
+  }
+
+  Map toMap() {
+    Map<String, dynamic> map = {
+      HelperDisciplina.nomeColumn: nomeDisc,
+      HelperDisciplina.creditosColumn: creditos,
+      HelperDisciplina.tipoColumn: tipo,
+      HelperDisciplina.hrsObgColumn: hrs,
+      HelperDisciplina.limiteColumn: limiteFaltas,
+      HelperDisciplina.idCursoColumn: idCurso,
+    };
+
+    if(id != null){
+      map[HelperDisciplina.idColumn] = id;
+    }
+    return map;
+  }
+
 }

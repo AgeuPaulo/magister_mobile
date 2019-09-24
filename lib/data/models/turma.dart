@@ -1,3 +1,4 @@
+import 'package:magister_mobile/data/helpers/helperturma.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
 import 'package:magister_mobile/data/models/periodoletivo.dart';
 import 'package:magister_mobile/data/models/professor.dart';
@@ -5,13 +6,20 @@ import 'package:magister_mobile/data/models/professor.dart';
 class Turma {
   int _ano;
   int _semestre;
-  int _idDisc;
-  int _vagas;
-  Professor _professor;
-  Disciplina _disciplina;
   PeriodoLetivo _peridoLetivo;
+  int _vagas;
+  int _idDisc;
+  Disciplina _disciplina;
+  int _idProf;
+  Professor _professor;
 
-  Turma(this._ano, this._semestre, this._idDisc, this._vagas);
+  Turma({int ano, int semestre, int idDisc, int vagas, int idProf}){
+    this._ano = ano;
+    this._semestre = semestre;
+    this._idDisc = idDisc;
+    this._vagas = vagas;
+    this._idProf = idProf;
+  }
 
   int get ano => this._ano;
   set ano(int ano) => this._ano = ano;
@@ -25,12 +33,39 @@ class Turma {
   int get vagas => this._vagas;
   set vagas(int vagas) => this._vagas = vagas;
 
-  Professor get professor => this._professor;
-  set professor(Professor professor) => this._professor = professor;
-
   Disciplina get disciplina => this._disciplina;
   set disciplina(Disciplina disciplina) => this._disciplina = disciplina;
 
   PeriodoLetivo get peridoLetivo => this._peridoLetivo;
-  set periodoLetivo(PeriodoLetivo periodoLetivo) => this._peridoLetivo = periodoLetivo;
+  set periodoLetivo(PeriodoLetivo periodoLetivo) =>
+      this._peridoLetivo = periodoLetivo;
+
+  int get idProf => this._idProf;
+  set idProf(int idProf) => this._idProf = idProf;
+
+  set coordenador(Professor professor) {
+    this._professor = professor;
+    this.idProf = this._professor.id;
+  }
+
+  Turma.fromMap(Map map) {
+    _ano = map[HelperTurma.anoColumn];
+    _semestre = map[HelperTurma.semestreColumn];
+    _idDisc = map[HelperTurma.idDiscColumn];
+    _vagas = map[HelperTurma.vagaColumn];
+  }
+
+  Map toMap() {
+    Map<String, dynamic> map = {
+      HelperTurma.vagaColumn: vagas,
+      HelperTurma.idProfColumn: idProf,
+    };
+
+    if (ano != null && semestre != null && idDisc != null) {
+      map[HelperTurma.anoColumn] = ano;
+      map[HelperTurma.semestreColumn] = semestre;
+      map[HelperTurma.idDiscColumn] = idDisc;
+    }
+    return map;
+  }
 }
