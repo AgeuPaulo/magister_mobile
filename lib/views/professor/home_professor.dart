@@ -20,7 +20,10 @@ class _HomeProfessorState extends State<HomeProfessor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter SQLite"),
+        title: Text("PROFESSORES"),
+        backgroundColor: Colors.amber,
+        elevation: 1,
+        centerTitle: true,
       ),
       body: FutureBuilder<List>(
         future: HelperProfessor.getInstance().getAll(),
@@ -34,14 +37,14 @@ class _HomeProfessorState extends State<HomeProfessor> {
                 Professor item = snapshot.data[index];
                 return Dismissible(
                   key: UniqueKey(),
-                  background: Container(color: Colors.red),
+                  background: Container(color: Colors.amber),
                   onDismissed: (direction) {
                     HelperProfessor.getInstance().delete(item.id);
                   },
                   child: ListTile(
                     title: Text(item.nomeProf.toString()),
                     subtitle: Text(item.matricula.toString()),
-                    leading: CircleAvatar(child: Text(item.id.toString())),
+                    leading: CircleAvatar(backgroundColor: Colors.amber, child: Text(item.id.toString())),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditProfessor(
@@ -59,6 +62,7 @@ class _HomeProfessorState extends State<HomeProfessor> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.amber,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

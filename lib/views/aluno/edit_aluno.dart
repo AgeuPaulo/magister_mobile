@@ -3,6 +3,7 @@ import 'package:magister_mobile/data/helpers/helperaluno.dart';
 import 'package:magister_mobile/data/helpers/helpercurso.dart';
 import 'package:magister_mobile/data/models/aluno.dart';
 import 'package:magister_mobile/data/models/curso.dart';
+import 'package:magister_mobile/views/util/widgetUtil.dart';
 
 class EditAluno extends StatefulWidget {
   final bool edit;
@@ -37,126 +38,144 @@ class _EditCursoState extends State<EditAluno> {
     }
   }
 
+  void onPressed() async {
+    if (!_formKey.currentState.validate()) {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Carregando')));
+    } else if (widget.edit == true) {
+      HelperAluno.getInstance().update(new Aluno(
+        id: widget.aluno.id,
+        nomeAluno: nomeController.text,
+        totalCredito: int.parse(totalCreditoController.text),
+        dataNascimento: dataController.text,
+        mgp: double.parse(mgpController.text),
+        idCurso: int.parse(idCursoController.text),
+      ));
+      Navigator.pop(context);
+    } else {
+      await HelperAluno.getInstance().save(
+        new Aluno(
+          nomeAluno: nomeController.text,
+          totalCredito: int.parse(totalCreditoController.text),
+          dataNascimento: dataController.text,
+          mgp: double.parse(mgpController.text),
+          idCurso: int.parse(idCursoController.text),
+        ),
+      );
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.edit ? "Edit Person" : "Add person"),
+        backgroundColor: Colors.indigoAccent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(widget.edit ? "Editar Aluno" : "Novo Aluno"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: (){
+              onPressed();
+            },
+          )
+        ],
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlutterLogo(
-                  size: 200,
-                ),
-                textFormField(nomeController, "Nome do curso", "Insira um nome",
-                    Icons.person, widget.edit ? widget.aluno.nome : "s"),
-                textFormField(
-                    totalCreditoController,
-                    "total crédito",
-                    "Insira o total de credito",
-                    Icons.place,
-                    widget.edit ? widget.aluno.totalCredito : "jk"),
-                textFormField(dataController, "Data de nascimento", "Insira um data",
-                    Icons.person, widget.edit ? widget.aluno.nome : "d"),
-                textFormField(mgpController, "MGP", "MGP",
-                    Icons.person, widget.edit ? widget.aluno.nome : "m"),
-                Container(
-                  height: 70,
-                  child: FutureBuilder<List>(
-                      future: HelperCurso.getInstance().getAll(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List> snapshot) {
-                        if (!snapshot.hasData)
-                          return CircularProgressIndicator();
-                        return DropdownButton<Curso>(
-                          items: snapshot.data
-                              .map((curso) => DropdownMenuItem<Curso>(
-                                    child: Text(curso.nomeCurso),
-                                    value: curso,
-                                  ))
-                              .toList(),
-                          onChanged: (Curso value) {
-                            setState(() {
-                              selected = value;
-                              idCursoController.text = selected.id.toString();
-                              current = value.nomeCurso;
-                            });
-                          },
-                          isExpanded: false,
-                          hint: Text(current),
-                        );
-                      }),
-                ),
-                RaisedButton(
-                  color: Colors.red,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
-                    "Save",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    if (!_formKey.currentState.validate()) {
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text('Carregando')));
-                    } else if (widget.edit == true) {
-                      HelperAluno.getInstance().update(new Aluno(
-                        id: widget.aluno.id,
-                        nomeAluno: nomeController.text,
-                        totalCredito: int.parse(totalCreditoController.text),
-                        dataNascimento: dataController.text,
-                        mgp: double.parse(mgpController.text),
-                        idCurso: int.parse(idCursoController.text),
-                      ));
-                      Navigator.pop(context);
-                    } else {
-                      await HelperAluno.getInstance().save(
-                        new Aluno(
-                         nomeAluno: nomeController.text,
-                        totalCredito: int.parse(totalCreditoController.text),
-                        dataNascimento: dataController.text,
-                        mgp: double.parse(mgpController.text),
-                        idCurso: int.parse(idCursoController.text),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height / 4,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+            decoration: BoxDecoration(
+              color: Colors.indigoAccent,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+            ),
+            child: Image.asset("assets/aluno.png"),
+          ),
+          Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    formField(
+                        nomeController,
+                        "Nome do Aluno",
+                        Icons.person,
+                        TextInputType.text,
+                        Colors.indigoAccent,
+                        widget.edit ? widget.aluno.nome : "s"),
+                    formField(
+                        totalCreditoController,
+                        "total crédito",
+                        Icons.place,
+                        TextInputType.number,
+                        Colors.indigoAccent,
+                        widget.edit ? widget.aluno.totalCredito : "jk"),
+                    formField(
+                        dataController,
+                        "Data de nascimento",
+                        Icons.person,
+                        TextInputType.text,
+                        Colors.indigoAccent,
+                        widget.edit ? widget.aluno.nome : "d"),
+                    formField(
+                        mgpController,
+                        "MGP",
+                        Icons.person,
+                        TextInputType.number,
+                        Colors.indigoAccent,
+                        widget.edit ? widget.aluno.nome : "m"),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border:
+                              Border.all(color: Colors.indigoAccent, width: 1),
                         ),
-                      );
-                      Navigator.pop(context);
-                    }
-                  },
-                )
-              ],
+                        child: FutureBuilder<List>(
+                            future: HelperCurso.getInstance().getAll(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List> snapshot) {
+                              if (!snapshot.hasData)
+                                return CircularProgressIndicator();
+                              return DropdownButton<Curso>(
+                                items: snapshot.data
+                                    .map((curso) => DropdownMenuItem<Curso>(
+                                          child: Text(curso.nomeCurso),
+                                          value: curso,
+                                        ))
+                                    .toList(),
+                                onChanged: (Curso value) {
+                                  setState(() {
+                                    selected = value;
+                                    idCursoController.text =
+                                        selected.id.toString();
+                                    current = value.nomeCurso;
+                                  });
+                                },
+                                isExpanded: false,
+                                hint: Text(current),
+                              );
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
-}
-
-textFormField(TextEditingController t, String label, String hint,
-    IconData iconData, String initialValue) {
-  return Padding(
-    padding: const EdgeInsets.only(
-      top: 10,
-    ),
-    child: TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter some text';
-        }
-      },
-      controller: t,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-          prefixIcon: Icon(iconData),
-          hintText: hint,
-          labelText: label,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    ),
-  );
 }

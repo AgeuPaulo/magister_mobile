@@ -19,7 +19,9 @@ class _HomeCursoState extends State<HomeCurso> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter SQLite"),
+        title: Text("CURSOS"),
+        backgroundColor: Colors.deepOrange,
+        centerTitle: true,
       ),
       body: FutureBuilder<List>(
         future: HelperCurso.getInstance().getAll(),
@@ -32,14 +34,14 @@ class _HomeCursoState extends State<HomeCurso> {
                 Curso item = snapshot.data[index];
                 return Dismissible(
                   key: UniqueKey(),
-                  background: Container(color: Colors.red),
+                  background: Container(color: Colors.deepOrange),
                   onDismissed: (direction) {
                     HelperCurso.getInstance().delete(item.id);
                   },
                   child: ListTile(
                     title: Text(item.nomeCurso.toString()),
                     subtitle: Text(item.totalCredito.toString()),
-                    leading: CircleAvatar(child: Text(item.id.toString())),
+                    leading: CircleAvatar(child: Text(item.id.toString()), backgroundColor: Colors.deepOrange,),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditCurso(
@@ -57,6 +59,7 @@ class _HomeCursoState extends State<HomeCurso> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

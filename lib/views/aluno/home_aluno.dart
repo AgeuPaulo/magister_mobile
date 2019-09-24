@@ -5,10 +5,10 @@ import 'package:magister_mobile/views/aluno/edit_aluno.dart';
 
 class HomeAluno extends StatefulWidget {
   @override
-  _HomeCursoState createState() => _HomeCursoState();
+  _HomeAlunoState createState() => _HomeAlunoState();
 }
 
-class _HomeCursoState extends State<HomeAluno> {
+class _HomeAlunoState extends State<HomeAluno> {
   @override
   void didUpdateWidget(HomeAluno oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -19,7 +19,9 @@ class _HomeCursoState extends State<HomeAluno> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter SQLite"),
+        title: Text("ALUNOS"),
+        centerTitle: true,
+        backgroundColor: Colors.indigoAccent,
       ),
       body: FutureBuilder<List>(
         future: HelperAluno.getInstance().getAll(),
@@ -32,14 +34,14 @@ class _HomeCursoState extends State<HomeAluno> {
                 Aluno item = snapshot.data[index];
                 return Dismissible(
                   key: UniqueKey(),
-                  background: Container(color: Colors.red),
+                  background: Container(color: Colors.indigoAccent),
                   onDismissed: (direction) {
                     HelperAluno.getInstance().delete(item.id);
                   },
                   child: ListTile(
                     title: Text(item.nome.toString()),
                     subtitle: Text(item.dataNascimento.toString()),
-                    leading: CircleAvatar(child: Text(item.id.toString())),
+                    leading: CircleAvatar(child: Text(item.id.toString()), backgroundColor: Colors.indigoAccent,),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditAluno(
@@ -57,6 +59,7 @@ class _HomeCursoState extends State<HomeAluno> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigoAccent,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(
