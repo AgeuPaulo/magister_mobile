@@ -59,7 +59,7 @@ class _EditProfessorState extends State<EditProfessor> {
         centerTitle: true,
         backgroundColor: Colors.amber,
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height / 4,

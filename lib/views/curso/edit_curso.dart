@@ -21,7 +21,7 @@ class _EditCursoState extends State<EditCurso> {
   TextEditingController idCoordenadorController = new TextEditingController();
   List<Professor> professores = new List();
   Professor selected;
-  String current = "Selecione coordenador";
+  String current = "Selecione coordenador".toUpperCase();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -125,25 +125,53 @@ class _EditCursoState extends State<EditCurso> {
                                 AsyncSnapshot<List> snapshot) {
                               if (!snapshot.hasData)
                                 return CircularProgressIndicator();
-                              return DropdownButton<Professor>(
-                                items: snapshot.data
-                                    .map((professor) =>
-                                        DropdownMenuItem<Professor>(
-                                          child: Text(professor.nomeProf),
-                                          value: professor,
-                                        ))
-                                    .toList(),
-                                onChanged: (Professor value) {
-                                  setState(() {
-                                    selected = value;
-                                    idCoordenadorController.text =
-                                        selected.id.toString();
-                                    current = value.nomeProf;
-                                  });
-                                },
-                                isExpanded: false,
-                                //value: _currentUser,
-                                hint: Text(current),
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                    right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.person,
+                                      color: Colors.deepOrange,
+                                    ),
+                                    Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.deepOrange,
+                                          accentColor: Colors.deepOrange,
+                                          hintColor: Colors.deepOrange),
+                                      child: DropdownButton<Professor>(
+                                        style: TextStyle(
+                                          color: Colors.deepOrange,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        items: snapshot.data
+                                            .map((professor) =>
+                                                DropdownMenuItem<Professor>(
+                                                  child:
+                                                      Text(professor.nomeProf),
+                                                  value: professor,
+                                                ))
+                                            .toList(),
+                                        onChanged: (Professor value) {
+                                          setState(() {
+                                            selected = value;
+                                            idCoordenadorController.text =
+                                                selected.id.toString();
+                                            current = value.nomeProf;
+                                          });
+                                        },
+                                        isExpanded: false,
+                                        //value: _currentUser,
+                                        hint: Text(current),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             }),
                       ),
