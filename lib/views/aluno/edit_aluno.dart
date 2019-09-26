@@ -29,12 +29,10 @@ class _EditCursoState extends State<EditAluno> {
   void initState() {
     super.initState();
     if (widget.edit == true) {
-      idCursoController.text = selected.id.toString();
       nomeController.text = widget.aluno.nome.toString();
       totalCreditoController.text = widget.aluno.totalCredito.toString();
       dataController.text = widget.aluno.dataNascimento.toString();
       mgpController.text = widget.aluno.mgp.toString();
-      idCursoController.text = widget.aluno.curso.id.toString();
     }
   }
 

@@ -30,12 +30,10 @@ class _EditDisciplinaState extends State<EditDisciplina> {
   void initState() {
     super.initState();
     if (widget.edit == true) {
-      idCursoController.text = selected.id.toString();
       nomeController.text = widget.disciplina.nomeDisc.toString();
       creditoController.text = widget.disciplina.creditos.toString();
       tipoController.text = widget.disciplina.tipo.toString();
       hrsObgController.text = widget.disciplina.hrs.toString();
-      idCursoController.text = widget.disciplina.curso.id.toString();
     }
   }
 
