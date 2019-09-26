@@ -34,16 +34,22 @@ class Turma {
   set vagas(int vagas) => this._vagas = vagas;
 
   Disciplina get disciplina => this._disciplina;
-  set disciplina(Disciplina disciplina) => this._disciplina = disciplina;
+  set disciplina(Disciplina disciplina){
+    this._disciplina = disciplina;
+    this.idDisc = this._disciplina.id;
+  }
 
   PeriodoLetivo get peridoLetivo => this._peridoLetivo;
-  set periodoLetivo(PeriodoLetivo periodoLetivo) =>
+  set periodoLetivo(PeriodoLetivo periodoLetivo){
       this._peridoLetivo = periodoLetivo;
+      this._ano = this._peridoLetivo.ano;
+      this._semestre = this._peridoLetivo.semestre;
+  }
 
   int get idProf => this._idProf;
   set idProf(int idProf) => this._idProf = idProf;
 
-  set coordenador(Professor professor) {
+  set professor(Professor professor) {
     this._professor = professor;
     this.idProf = this._professor.id;
   }
