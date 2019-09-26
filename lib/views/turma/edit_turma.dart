@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:magister_mobile/data/models/curso.dart';
+import 'package:magister_mobile/data/models/periodoletivo.dart';
 import 'package:magister_mobile/data/models/turma.dart';
 
 class EditTurma extends StatefulWidget {
@@ -14,6 +16,17 @@ class EditTurma extends StatefulWidget {
 }
 
 class _EditTurmaState extends State<EditTurma> {
+  TextEditingController nomeController = new TextEditingController();
+  TextEditingController totalCreditoController = new TextEditingController();
+  TextEditingController dataController = new TextEditingController();
+  TextEditingController mgpController = new TextEditingController();
+  TextEditingController idCursoController = new TextEditingController();
+
+  PeriodoLetivo selectedPeriodo;
+  String currentPeriodo = "Selecione o período letivo";
+  Curso selectedCurso;
+  String currentCurso = "Selecione Curso";
+
   @override
   Widget build(BuildContext context) {
     return Container(

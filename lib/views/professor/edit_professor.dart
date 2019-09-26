@@ -89,7 +89,7 @@ class _EditProfessorState extends State<EditProfessor> {
                         Icons.person,
                         TextInputType.text,
                         Colors.amber,
-                        widget.edit ? widget.professor.nomeProf : "n"
+                        initialValue: widget.edit ? widget.professor.nomeProf : "n"
                     ),
                     formField(
                         matriculaController,
@@ -97,7 +97,7 @@ class _EditProfessorState extends State<EditProfessor> {
                         Icons.apps,
                         TextInputType.number,
                         Colors.amber,
-                        widget.edit ? widget.professor.matricula : "m"),
+                    ),
                     buttonSave(
                         Colors.amber, Colors.amberAccent, context, onPressed),
                   ],

@@ -103,14 +103,14 @@ class _EditCursoState extends State<EditCurso> {
                         Icons.school,
                         TextInputType.text,
                         Colors.deepOrange,
-                        widget.edit ? widget.curso.nomeCurso : "n"),
+                         initialValue: widget.edit ? widget.curso.nomeCurso : "n"),
                     formField(
                         totalCreditoController,
                         "Total de crédito",
                         Icons.apps,
                         TextInputType.number,
                         Colors.deepOrange,
-                        widget.edit ? widget.curso.totalCredito : "t"),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(

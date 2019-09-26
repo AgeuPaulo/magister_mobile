@@ -112,28 +112,26 @@ class _EditCursoState extends State<EditAluno> {
                         Icons.person,
                         TextInputType.text,
                         Colors.indigoAccent,
-                        widget.edit ? widget.aluno.nome : "s"),
+                         initialValue: widget.edit ? widget.aluno.nome : "s"),
                     formField(
                         totalCreditoController,
                         "total crédito",
                         Icons.place,
                         TextInputType.number,
-                        Colors.indigoAccent,
-                        widget.edit ? widget.aluno.totalCredito : "jk"),
+                        Colors.indigoAccent,),
                     formField(
                         dataController,
                         "Data de nascimento",
                         Icons.person,
                         TextInputType.text,
                         Colors.indigoAccent,
-                        widget.edit ? widget.aluno.nome : "d"),
+                         initialValue: widget.edit ? widget.aluno.nome : "d"),
                     formField(
                         mgpController,
                         "MGP",
                         Icons.person,
                         TextInputType.number,
-                        Colors.indigoAccent,
-                        widget.edit ? widget.aluno.nome : "m"),
+                        Colors.indigoAccent,),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(

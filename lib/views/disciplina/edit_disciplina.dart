@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helpercurso.dart';
 import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
@@ -25,7 +24,7 @@ class _EditDisciplinaState extends State<EditDisciplina> {
   TextEditingController idCursoController = new TextEditingController();
   Curso selected;
   String current = "Selecione Curso";
-   final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -57,16 +56,16 @@ class _EditDisciplinaState extends State<EditDisciplina> {
       await HelperDisciplina.getInstance().save(
         new Disciplina(
           nome: nomeController.text,
-        creditos: int.parse(creditoController.text),
-        tipo: tipoController.text,
-        hrs: int.parse(hrsObgController.text),
-        idCurso: int.parse(idCursoController.text),
+          creditos: int.parse(creditoController.text),
+          tipo: tipoController.text,
+          hrs: int.parse(hrsObgController.text),
+          idCurso: int.parse(idCursoController.text),
         ),
       );
       Navigator.pop(context);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +77,7 @@ class _EditDisciplinaState extends State<EditDisciplina> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: (){
+            onPressed: () {
               onPressed();
             },
           )
@@ -108,41 +107,34 @@ class _EditDisciplinaState extends State<EditDisciplina> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    formField(nomeController, "Nome da Disciplina",
+                        Icons.school, TextInputType.text, Colors.purple,
+                        initialValue:
+                            widget.edit ? widget.disciplina.nomeDisc : "n"),
                     formField(
-                        nomeController,
-                        "Nome da Disciplina",
-                        Icons.school,
-                        TextInputType.text,
-                        Colors.purple,
-                        widget.edit ? widget.disciplina.nomeDisc : "n"),
+                      creditoController,
+                      "Créditos",
+                      Icons.apps,
+                      TextInputType.number,
+                      Colors.purple,
+                    ),
+                    formField(tipoController, "Tipo", Icons.apps,
+                        TextInputType.text, Colors.purple,
+                        initialValue:
+                            widget.edit ? widget.disciplina.tipo : "t"),
                     formField(
-                        creditoController,
-                        "Créditos",
-                        Icons.apps,
-                        TextInputType.number,
-                        Colors.purple,
-                        widget.edit ? widget.disciplina.creditos : "c"),
-                    formField(
-                        tipoController,
-                        "Tipo",
-                        Icons.apps,
-                        TextInputType.text,
-                        Colors.purple,
-                        widget.edit ? widget.disciplina.tipo : "t"),
-                    formField(
-                        hrsObgController,
-                        "Horas Obrigatórias",
-                        Icons.watch_later,
-                        TextInputType.number,
-                        Colors.purple,
-                        widget.edit ? widget.disciplina.hrs : "m"),
+                      hrsObgController,
+                      "Horas Obrigatórias",
+                      Icons.watch_later,
+                      TextInputType.number,
+                      Colors.purple,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: Colors.purple, width: 1),
+                          border: Border.all(color: Colors.purple, width: 1),
                         ),
                         child: FutureBuilder<List>(
                             future: HelperCurso.getInstance().getAll(),

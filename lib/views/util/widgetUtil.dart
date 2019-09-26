@@ -37,7 +37,7 @@ Widget buttonSave(
 }
 
 Widget formField(TextEditingController controller, String label, IconData icon,
-    TextInputType type, Color color, String initialValue) {
+    TextInputType type, Color color, {String initialValue}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(

@@ -40,7 +40,7 @@ class HelperPeriodo extends HelperBase<PeriodoLetivo> {
               dataInicioColumn,
               dataFinalColumn,
             ],
-            where: "$anoColumn = ?, $semestreColumn = ?", 
+            where: "$anoColumn = ? AND $semestreColumn = ?", 
             whereArgs: [ano, semestre]);
 
         if (maps.length > 0) {
@@ -68,7 +68,7 @@ class HelperPeriodo extends HelperBase<PeriodoLetivo> {
   @override
   Future<int> update(PeriodoLetivo data) async => await db.then((database) {
         return database.update(periodoTable, data.toMap(),
-            where: "$anoColumn = ?, $semestreColumn = ?", whereArgs: [data.ano, data.semestre]);
+            where: "$anoColumn = ? AND $semestreColumn = ?", whereArgs: [data.ano, data.semestre]);
       });
 
   @override
