@@ -18,7 +18,10 @@ class HelperAluno extends HelperBase<Aluno> {
 
   @override
   Future<int> delete(int id) {
-    return null;
+    return db.then((database) async {
+      return await database
+          .delete(alunoTable, where: "$idColumn = ?", whereArgs: [id]);
+    });
   }
 
   @override
@@ -31,16 +34,32 @@ class HelperAluno extends HelperBase<Aluno> {
         return lista;
       });
 
-  @override
-  Future<Aluno> getFirst(int id) {
-    // TODO: implement getFirst
-    return null;
-  }
+ @override
+  Future<Aluno> getFirst(int id) async => db.then((database) async {
+        List<Map> maps = await database.query(alunoTable,
+            columns: [
+              idColumn,
+              nomeColumn,
+              totalCreditoColumn,
+              dataColumn,
+              mgpColumn,
+              idCursoColumn,
+            ],
+            where: "$idColumn = ?",
+            whereArgs: [id]);
+
+        if (maps.length > 0) {
+          return Aluno.fromMap(maps.first);
+        } else {
+          return null;
+        }
+      });
 
   @override
-  Future<int> getNumber() {
-    // TODO: implement getNumber
-    return null;
+  Future<int> getNumber() async {
+    return Sqflite.firstIntValue(await db.then((database) {
+      return database.rawQuery("SELECT COUNT(*) FROM $alunoTable");
+    }));
   }
 
   @override
@@ -48,13 +67,13 @@ class HelperAluno extends HelperBase<Aluno> {
     db.then((database) async {
       await database.insert(alunoTable, aluno.toMap());
     });
-    return null;
+    return aluno;
   }
 
   @override
-  Future<int> update(Aluno data) {
-    // TODO: implement update
-    return null;
-  }
+  Future<int> update(Aluno data) async => await db.then((database) {
+        return database.update(alunoTable, data.toMap(),
+            where: "$idColumn = ?", whereArgs: [data.id]);
+      });
 
 }

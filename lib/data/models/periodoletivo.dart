@@ -38,14 +38,11 @@ class PeriodoLetivo {
 
   Map toMap() {
     Map<String, dynamic> map = {
+      HelperPeriodo.anoColumn: ano,
+      HelperPeriodo.semestreColumn: semestre,
       HelperPeriodo.dataInicioColumn: dataInicio,
       HelperPeriodo.dataFinalColumn: dataFinal
     };
-
-    if (ano != null && semestre != null) {
-      map[HelperPeriodo.anoColumn] = this._ano;
-      map[HelperPeriodo.semestreColumn] = this._semestre;
-    }
     return map;
   }
 

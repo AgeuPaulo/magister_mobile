@@ -1,10 +1,10 @@
 
 import 'package:magister_mobile/data/helpers/helperbase.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
+import 'package:sqflite/sqflite.dart';
 
 class HelperDisciplina extends HelperBase<Disciplina> {
   static final String disciplinaTable = "tb_disciplina";
-
   static final String idColumn = "id";
   static final String nomeColumn = "nome";
   static final String creditosColumn = "creditos";
@@ -18,38 +18,63 @@ class HelperDisciplina extends HelperBase<Disciplina> {
   HelperDisciplina.getInstance();
 
   @override
-  Future<int> delete(int id) {
-    // TODO: implement delete
-    return null;
+  Future<int> delete(int id) async {
+    return db.then((database) async {
+      return await database
+          .delete(disciplinaTable, where: "$idColumn = ?", whereArgs: [id]);
+    });
   }
 
   @override
-  Future<List> getAll() {
-    // TODO: implement getAll
-    return null;
+  Future<List> getAll() async => db.then((database) async {
+        List listMap = await database.rawQuery("SELECT * FROM $disciplinaTable");
+        List<Disciplina> lista = List();
+        for (Map m in listMap) {
+          lista.add(Disciplina.fromMap(m));
+        }
+        return lista;
+      });
+
+  @override
+  Future<Disciplina> getFirst(int id) async => db.then((database) async {
+        List<Map> maps = await database.query(disciplinaTable,
+            columns: [
+              idColumn,
+              nomeColumn,
+              creditosColumn,
+              tipoColumn,
+              hrsObgColumn,
+              limiteColumn,
+              idCursoColumn,
+            ],
+            where: "$idColumn = ?",
+            whereArgs: [id]);
+
+        if (maps.length > 0) {
+          return Disciplina.fromMap(maps.first);
+        } else {
+          return null;
+        }
+      });
+
+  @override
+  Future<int> getNumber() async {
+    return Sqflite.firstIntValue(await db.then((database) {
+      return database.rawQuery("SELECT COUNT(*) FROM $disciplinaTable");
+    }));
   }
 
   @override
-  Future<Disciplina> getFirst(int id) {
-    // TODO: implement getFirst
-    return null;
+  Future<Disciplina> save(Disciplina disciplina) async {
+    db.then((database) async {
+      await database.insert(disciplinaTable, disciplina.toMap());
+    });
+    return disciplina;
   }
 
   @override
-  Future<int> getNumber() {
-    // TODO: implement getNumber
-    return null;
-  }
-
-  @override
-  Future<Disciplina> save(Disciplina curso) {
-    // TODO: implement save
-    return null;
-  }
-
-  @override
-  Future<int> update(Disciplina data) {
-    // TODO: implement update
-    return null;
-  }
+  Future<int> update(Disciplina data) async => await db.then((database) {
+        return database.update(disciplinaTable, data.toMap(),
+            where: "$idColumn = ?", whereArgs: [data.id]);
+      });
 }
