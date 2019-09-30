@@ -50,38 +50,33 @@ class _ViewCursoState extends State<ViewCurso> {
         backgroundColor: Colors.deepOrange,
         elevation: 0,
       ),
-      body: ListView(
+      body: Column(
         children: <Widget>[
-          Card(
-            child: ListTile(
-              title: Text(widget.curso.coordenador.toString()),
-              subtitle: Text(widget.curso.totalCredito.toString()),
-            ),
-          ),
           Card(
             color: Colors.deepOrange,
             elevation: 0,
-            margin: EdgeInsets.all(8.0),
             child: Center(
-              heightFactor: 1.5,
-              child: Text(
-                "Lista de todos os alunos do curso",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Lista de todos os alunos do curso",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
                 ),
               ),
-            )
+            ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height / 3.5,
+          Expanded(
             child: ListView.builder(
               itemCount: alunos.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text(alunos[index].nome),
+                return ListTile(
+                  title: Text(alunos[index].nome),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.deepOrange,
+                    child: Text(alunos[index].id.toString()),
                   ),
                 );
               },
@@ -90,30 +85,47 @@ class _ViewCursoState extends State<ViewCurso> {
           Card(
             color: Colors.deepOrange,
             elevation: 0,
-            margin: EdgeInsets.all(8.0),
             child: Center(
-              heightFactor: 1.5,
-              child: Text(
-                "Lista de todos as disciplinas do curso",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Lista de todos as disciplinas do curso",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
                 ),
               ),
-            )
+            ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height / 3,
+          Expanded(
             child: ListView.builder(
-              itemCount: disciplinas.length,
+              itemCount: alunos.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: Icon(Icons.school),
-                    title: Text(disciplinas[index].nomeDisc),
+                return ListTile(
+                  title: Text(disciplinas[index].nomeDisc),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.deepOrange,
+                    child: Text(disciplinas[index].id.toString()),
                   ),
                 );
               },
+            ),
+          ),
+          Card(
+            color: Colors.deepOrange,
+            elevation: 0,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Lista de todos os professores do curso",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

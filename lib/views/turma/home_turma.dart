@@ -44,8 +44,9 @@ class _HomeTurmaState extends State<HomeTurma> {
                     HelperTurma.getInstance().deleteDisciplina(item.ano, item.semestre, item.idDisc);
                   },
                   child: ListTile(
-                    title: Text(item.idDisc.toString()),
-                    leading: CircleAvatar(backgroundColor: Colors.teal, child: Text(item.ano.toString() + "." + item.semestre.toString())),
+                    title: Text(item.ano.toString() + "." + item.semestre.toString()),
+                    subtitle: Text(item.idDisc.toString()),
+                    leading: CircleAvatar(backgroundColor: Colors.teal, child: Text((index + 1).toString())),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditTurma(
