@@ -69,4 +69,9 @@ class Aluno {
     return map;
   }
 
+  @override
+  String toString() {
+    return "Aluno(id: $id, nome: $nome)";
+  }
+
 }

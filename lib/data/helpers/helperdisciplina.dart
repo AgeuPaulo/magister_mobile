@@ -77,4 +77,13 @@ class HelperDisciplina extends HelperBase<Disciplina> {
         return database.update(disciplinaTable, data.toMap(),
             where: "$idColumn = ?", whereArgs: [data.id]);
       });
+
+  Future<List> getAllFromCurso(int id) async => db.then((database) async {
+        List listMap = await database.query(disciplinaTable, where: "$idCursoColumn = ?", whereArgs: [id]);
+        List<Disciplina> lista = List();
+        for (Map m in listMap) {
+          lista.add(Disciplina.fromMap(m));
+        }
+        return lista;
+      });
 }

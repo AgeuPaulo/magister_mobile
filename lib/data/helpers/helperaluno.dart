@@ -76,4 +76,12 @@ class HelperAluno extends HelperBase<Aluno> {
             where: "$idColumn = ?", whereArgs: [data.id]);
       });
 
+  Future<List> getAllFromCurso(int id) async => db.then((database) async {
+        List listMap = await database.query(alunoTable, where: "$idCursoColumn = ?", whereArgs: [id]);
+        List<Aluno> lista = List();
+        for (Map m in listMap) {
+          lista.add(Aluno.fromMap(m));
+        }
+        return lista;
+      });
 }

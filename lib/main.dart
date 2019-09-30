@@ -5,6 +5,7 @@ import 'package:magister_mobile/views/disciplina/home_disciplina.dart';
 import 'package:magister_mobile/views/periodoLetivo/home_periodoLetivo.dart';
 import 'package:magister_mobile/views/professor/home_professor.dart';
 import 'package:magister_mobile/views/turma/home_turma.dart';
+import 'package:magister_mobile/views/util/widgetUtil.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,45 +51,6 @@ class Home extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget menuCard(IconData icon, String nome, Color color, Widget proximo, BuildContext context) {
-  return Card(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(30.0),
-      bottomRight: Radius.circular(30.0),
-    )),
-    color: color,
-    margin: EdgeInsets.all(8.0),
-    child: InkWell(
-      onTap: () {
-         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => proximo,
-         ));
-      },
-      splashColor: Colors.blue,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              icon,
-              size: 80.0,
-              color: Colors.white,
-            ),
-            Text(
-              nome.toUpperCase(),
-              style: TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
 }
 
 

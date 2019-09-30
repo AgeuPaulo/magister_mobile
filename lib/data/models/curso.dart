@@ -27,6 +27,7 @@ class Curso {
   int get idCoordenador => this._idCoordenador;
   set idCoordenador(int idCoordenador) => this._idCoordenador = idCoordenador;
 
+  get coordenador => this._coordenador;
   set coordenador(Professor professor) {
     this._coordenador = professor;
     this._idCoordenador = this._coordenador.id;
@@ -50,6 +51,11 @@ class Curso {
       map[HelperCurso.idColumn] = id;
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return "Curso(id: $id, nome: $nomeCurso)";
   }
   
 }

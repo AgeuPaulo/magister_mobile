@@ -73,4 +73,9 @@ class Disciplina {
     return map;
   }
 
+  @override
+  String toString() {
+    return "Disciplina(id: $id, nome: $nomeDisc)";
+  }
+
 }

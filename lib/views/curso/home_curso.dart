@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helpercurso.dart';
 import 'package:magister_mobile/data/models/curso.dart';
 import 'package:magister_mobile/views/curso/edit_curso.dart';
+import 'package:magister_mobile/views/curso/view_curso.dart';
 
 class HomeCurso extends StatefulWidget {
   @override
@@ -44,10 +45,7 @@ class _HomeCursoState extends State<HomeCurso> {
                     leading: CircleAvatar(child: Text(item.id.toString()), backgroundColor: Colors.deepOrange,),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditCurso(
-                                true,
-                                curso: item,
-                              )));
+                          builder: (context) => ViewCurso(curso: item)));
                     },
                   ),
                 );

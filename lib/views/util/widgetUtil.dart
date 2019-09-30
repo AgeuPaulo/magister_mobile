@@ -1,5 +1,44 @@
 import 'package:flutter/material.dart';
 
+Widget menuCard(IconData icon, String nome, Color color, Widget proximo, BuildContext context) {
+  return Card(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(30.0),
+      bottomRight: Radius.circular(30.0),
+    )),
+    color: color,
+    margin: EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: () {
+         Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => proximo,
+         ));
+      },
+      splashColor: Colors.blue,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              icon,
+              size: 80.0,
+              color: Colors.white,
+            ),
+            Text(
+              nome.toUpperCase(),
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget buttonSave(
     Color color, Color color2, BuildContext context, Function onPressed) {
   return Padding(
