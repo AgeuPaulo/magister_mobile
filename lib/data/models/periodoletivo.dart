@@ -46,6 +46,8 @@ class PeriodoLetivo {
     return map;
   }
 
-
-  
+  @override
+  String toString() {
+    return this._ano.toString() + "." + this._semestre.toString();
+  }
 }

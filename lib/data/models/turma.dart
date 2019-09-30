@@ -59,6 +59,7 @@ class Turma {
     _semestre = map[HelperTurma.semestreColumn];
     _idDisc = map[HelperTurma.idDiscColumn];
     _vagas = map[HelperTurma.vagaColumn];
+    _idProf = map[HelperTurma.idProfColumn];
   }
 
   Map toMap() {

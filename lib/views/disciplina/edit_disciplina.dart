@@ -46,9 +46,11 @@ class _EditDisciplinaState extends State<EditDisciplina> {
         nome: nomeController.text,
         creditos: int.parse(creditoController.text),
         tipo: tipoController.text,
+        limite: int.parse(limiteFaltasController.text),
         hrs: int.parse(hrsObgController.text),
         idCurso: int.parse(idCursoController.text),
       ));
+      Navigator.pop(context);
       Navigator.pop(context);
     } else {
       await HelperDisciplina.getInstance().save(
@@ -56,6 +58,7 @@ class _EditDisciplinaState extends State<EditDisciplina> {
           nome: nomeController.text,
           creditos: int.parse(creditoController.text),
           tipo: tipoController.text,
+          limite: int.parse(limiteFaltasController.text),
           hrs: int.parse(hrsObgController.text),
           idCurso: int.parse(idCursoController.text),
         ),
@@ -127,6 +130,13 @@ class _EditDisciplinaState extends State<EditDisciplina> {
                       TextInputType.number,
                       Colors.purple,
                     ),
+                    formField(
+                      limiteFaltasController,
+                      "Limite de Faltas",
+                      Icons.apps,
+                      TextInputType.number,
+                      Colors.purple,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -140,23 +150,51 @@ class _EditDisciplinaState extends State<EditDisciplina> {
                                 AsyncSnapshot<List> snapshot) {
                               if (!snapshot.hasData)
                                 return CircularProgressIndicator();
-                              return DropdownButton<Curso>(
-                                items: snapshot.data
-                                    .map((curso) => DropdownMenuItem<Curso>(
-                                          child: Text(curso.nomeCurso),
-                                          value: curso,
-                                        ))
-                                    .toList(),
-                                onChanged: (Curso value) {
-                                  setState(() {
-                                    selected = value;
-                                    idCursoController.text =
-                                        selected.id.toString();
-                                    current = value.nomeCurso;
-                                  });
-                                },
-                                isExpanded: false,
-                                hint: Text(current),
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                    right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.school,
+                                      color: Colors.purple,
+                                    ),
+                                    Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.purple,
+                                          accentColor: Colors.purple,
+                                          hintColor: Colors.purple),
+                                      child: DropdownButton<Curso>(
+                                        style: TextStyle(
+                                          color: Colors.purple,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        items: snapshot.data
+                                            .map((curso) =>
+                                                DropdownMenuItem<Curso>(
+                                                  child: Text(curso.nomeCurso),
+                                                  value: curso,
+                                                ))
+                                            .toList(),
+                                        onChanged: (Curso value) {
+                                          setState(() {
+                                            selected = value;
+                                            idCursoController.text =
+                                                selected.id.toString();
+                                            current = value.nomeCurso;
+                                          });
+                                        },
+                                        isExpanded: false,
+                                        hint: Text(current.toUpperCase()),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             }),
                       ),

@@ -32,7 +32,7 @@ class HelperPeriodo extends HelperBase<PeriodoLetivo> {
         return lista;
       });
 
-  Future<PeriodoLetivo> getFirstSemestre(int ano, int semestre) async => db.then((database) async {
+  Future<PeriodoLetivo> getFirstPeriodo(int ano, int semestre) async => db.then((database) async {
         List<Map> maps = await database.query(periodoTable,
             columns: [
               anoColumn,

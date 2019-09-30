@@ -38,17 +38,23 @@ class _HomeAlunoState extends State<HomeAluno> {
                   onDismissed: (direction) {
                     HelperAluno.getInstance().delete(item.id);
                   },
-                  child: ListTile(
-                    title: Text(item.nome.toString()),
-                    subtitle: Text(item.dataNascimento.toString()),
-                    leading: CircleAvatar(child: Text(item.id.toString()), backgroundColor: Colors.indigoAccent,),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditAluno(
-                                true,
-                                aluno: item,
-                              )));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(item.nome.toString()),
+                      subtitle: Text(item.dataNascimento.toString()),
+                      leading: CircleAvatar(
+                        child: Text(item.id.toString(),
+                            style: TextStyle(color: Colors.white)),
+                        backgroundColor: Colors.indigoAccent,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditAluno(
+                                  true,
+                                  aluno: item,
+                                )));
+                      },
+                    ),
                   ),
                 );
               },
@@ -59,7 +65,7 @@ class _HomeAlunoState extends State<HomeAluno> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.indigoAccent,
+          backgroundColor: Colors.indigoAccent,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

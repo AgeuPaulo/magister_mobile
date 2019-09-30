@@ -1,6 +1,57 @@
 import 'package:flutter/material.dart';
 
-Widget menuCard(IconData icon, String nome, Color color, Widget proximo, BuildContext context) {
+Widget faixaCard(Color color, String title) {
+  return Card(
+      color: color,
+      elevation: 0,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+            ),
+          ),
+      ),
+    ),
+  );
+}
+
+Widget viewCard(String up, String down, BuildContext context, Color color) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 1.0),
+    child: Container(
+      height: MediaQuery.of(context).size.height / 9,
+      decoration: BoxDecoration(
+        color: color,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            up,
+            style: TextStyle(
+              fontSize: 30.0,
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            down,
+            style: TextStyle(
+              fontSize: 18.0,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget menuCard(IconData icon, String nome, Color color, Widget proximo,
+    BuildContext context) {
   return Card(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -11,9 +62,9 @@ Widget menuCard(IconData icon, String nome, Color color, Widget proximo, BuildCo
     margin: EdgeInsets.all(8.0),
     child: InkWell(
       onTap: () {
-         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => proximo,
-         ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => proximo,
+        ));
       },
       splashColor: Colors.blue,
       child: Center(
@@ -76,7 +127,8 @@ Widget buttonSave(
 }
 
 Widget formField(TextEditingController controller, String label, IconData icon,
-    TextInputType type, Color color, {String initialValue}) {
+    TextInputType type, Color color,
+    {String initialValue}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -86,9 +138,7 @@ Widget formField(TextEditingController controller, String label, IconData icon,
       ),
       child: Theme(
         data: new ThemeData(
-            primaryColor: color,
-            accentColor: color,
-            hintColor: color),
+            primaryColor: color, accentColor: color, hintColor: color),
         child: TextFormField(
           keyboardType: type,
           controller: controller,

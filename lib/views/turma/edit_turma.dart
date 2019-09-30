@@ -3,7 +3,6 @@ import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
 import 'package:magister_mobile/data/helpers/helperperiodo.dart';
 import 'package:magister_mobile/data/helpers/helperprofessor.dart';
 import 'package:magister_mobile/data/helpers/helperturma.dart';
-import 'package:magister_mobile/data/models/curso.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
 import 'package:magister_mobile/data/models/periodoletivo.dart';
 import 'package:magister_mobile/data/models/professor.dart';
@@ -36,6 +35,14 @@ class _EditTurmaState extends State<EditTurma> {
   Disciplina selectedDisci;
   String currentDisc = "Selecione Disciplina".toUpperCase();
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.edit == true) {
+      vagasController.text = widget.turma.vagas.toString();
+    }
+  }
+
   void onPressed() async {
     if (!_formKey.currentState.validate()) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Carregando')));
@@ -48,14 +55,15 @@ class _EditTurmaState extends State<EditTurma> {
         idProf: int.parse(idProfController.text),
       ));
       Navigator.pop(context);
+      Navigator.pop(context);
     } else {
       await HelperTurma.getInstance().save(
         new Turma(
           ano: int.parse(anoController.text),
           semestre: int.parse(semestreController.text),
           idDisc: int.parse(idDiscController.text),
-           vagas: int.parse(vagasController.text),
-        idProf: int.parse(idProfController.text),
+          vagas: int.parse(vagasController.text),
+          idProf: int.parse(idProfController.text),
         ),
       );
       Navigator.pop(context);
@@ -74,7 +82,7 @@ class _EditTurmaState extends State<EditTurma> {
           IconButton(
             color: Colors.white,
             icon: Icon(Icons.check),
-            onPressed: (){
+            onPressed: () {
               onPressed();
             },
           )
@@ -147,8 +155,7 @@ class _EditTurmaState extends State<EditTurma> {
                                       onChanged: (Professor value) {
                                         setState(() {
                                           selectedProf = value;
-                                          idProfController.text =
-                                              selectedProf.id.toString();
+                                          idProfController.text = selectedProf.id.toString();
                                           currentProf = value.nomeProf;
                                         });
                                       },

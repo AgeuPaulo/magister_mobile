@@ -1,9 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helperturma.dart';
 import 'package:magister_mobile/data/models/turma.dart';
 import 'package:magister_mobile/views/turma/edit_turma.dart';
+import 'package:magister_mobile/views/turma/view_turma.dart';
 
 class HomeTurma extends StatefulWidget {
   @override
@@ -11,7 +10,6 @@ class HomeTurma extends StatefulWidget {
 }
 
 class _HomeTurmaState extends State<HomeTurma> {
-
   @override
   void didUpdateWidget(HomeTurma oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -29,8 +27,7 @@ class _HomeTurmaState extends State<HomeTurma> {
       ),
       body: FutureBuilder<List>(
         future: HelperTurma.getInstance().getAll(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -41,19 +38,29 @@ class _HomeTurmaState extends State<HomeTurma> {
                   key: UniqueKey(),
                   background: Container(color: Colors.teal),
                   onDismissed: (direction) {
-                    HelperTurma.getInstance().deleteDisciplina(item.ano, item.semestre, item.idDisc);
+                    HelperTurma.getInstance()
+                        .deleteDisciplina(item.ano, item.semestre, item.idDisc);
                   },
-                  child: ListTile(
-                    title: Text(item.ano.toString() + "." + item.semestre.toString()),
-                    subtitle: Text(item.idDisc.toString()),
-                    leading: CircleAvatar(backgroundColor: Colors.teal, child: Text((index + 1).toString())),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditTurma(
-                                true,
-                                turma: item,
-                              )));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(
+                          item.ano.toString() + "." + item.semestre.toString()),
+                      subtitle: Text(item.idDisc.toString() +
+                          " - " +
+                          item.idProf.toString()),
+                      leading: CircleAvatar(
+                          backgroundColor: Colors.teal,
+                          child: Text(
+                            item.vagas.toString(),
+                            style: TextStyle(color: Colors.white),
+                          )),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ViewTurma(
+                                  turma: item,
+                                )));
+                      },
+                    ),
                   ),
                 );
               },
@@ -64,7 +71,7 @@ class _HomeTurmaState extends State<HomeTurma> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.teal,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

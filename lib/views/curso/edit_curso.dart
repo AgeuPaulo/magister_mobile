@@ -71,6 +71,14 @@ class _EditCursoState extends State<EditCurso> {
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
         elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: (){
+              onPressed();
+            },
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -175,8 +183,6 @@ class _EditCursoState extends State<EditCurso> {
                             }),
                       ),
                     ),
-                    buttonSave(Colors.deepOrange, Colors.deepOrangeAccent,
-                        context, onPressed)
                   ],
                 ),
               ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helperperiodo.dart';
 import 'package:magister_mobile/data/models/periodoletivo.dart';
@@ -10,7 +9,6 @@ class HomePeriodoLetivo extends StatefulWidget {
 }
 
 class _HomePeriodoLetivoState extends State<HomePeriodoLetivo> {
-
   @override
   void didUpdateWidget(HomePeriodoLetivo oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -28,8 +26,7 @@ class _HomePeriodoLetivoState extends State<HomePeriodoLetivo> {
       ),
       body: FutureBuilder<List>(
         future: HelperPeriodo.getInstance().getAll(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -40,19 +37,24 @@ class _HomePeriodoLetivoState extends State<HomePeriodoLetivo> {
                   key: UniqueKey(),
                   background: Container(color: Colors.lightGreen),
                   onDismissed: (direction) {
-                    HelperPeriodo.getInstance().deletePeriodo(item.ano, item.semestre);
+                    HelperPeriodo.getInstance()
+                        .deletePeriodo(item.ano, item.semestre);
                   },
-                  child: ListTile(
-                    title: Text(item.ano.toString() + "." + item.semestre.toString()),
-                    subtitle: Text(item.dataInicio.toString() + " - " + item.dataFinal.toString()),
-                    leading: CircleAvatar(backgroundColor: Colors.lightGreen,),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditPeriodoLetivo(
-                                true,
-                                periodo: item,
-                              )));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(
+                          item.ano.toString() + "." + item.semestre.toString()),
+                      subtitle: Text(item.dataInicio.toString() +
+                          " - " +
+                          item.dataFinal.toString()),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditPeriodoLetivo(
+                                  true,
+                                  periodo: item,
+                                )));
+                      },
+                    ),
                   ),
                 );
               },
@@ -63,11 +65,11 @@ class _HomePeriodoLetivoState extends State<HomePeriodoLetivo> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightGreen,
+          backgroundColor: Colors.lightGreen,
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => EditPeriodoLetivo(false)));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EditPeriodoLetivo(false)));
           }),
     );
   }

@@ -7,6 +7,7 @@ import 'package:magister_mobile/data/models/curso.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
 import 'package:magister_mobile/data/models/professor.dart';
 import 'package:magister_mobile/views/curso/edit_curso.dart';
+import 'package:magister_mobile/views/util/widgetUtil.dart';
 
 class ViewCurso extends StatefulWidget {
   final Curso curso;
@@ -49,31 +50,10 @@ class _ViewCursoState extends State<ViewCurso> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Card(
-            elevation: 0,
-            child: ListTile(
-              title: Text("Coordenador: " + coordenador.nomeProf),
-              subtitle: Text(
-                  "Total de créditos: " + widget.curso.totalCredito.toString()),
-            ),
-          ),
-          Card(
-            color: Colors.deepOrange,
-            elevation: 0,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Lista de todos os alunos do curso",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          viewCard(coordenador.nomeProf, "Coordenador", context, Colors.deepOrange),
+          faixaCard(Colors.deepOrange, "Lista de todos os alunos do curso"),
           Expanded(
             child: FutureBuilder<List>(
               future:
@@ -88,6 +68,14 @@ class _ViewCursoState extends State<ViewCurso> {
                       Aluno aluno = snapshot.data[index];
                       return ListTile(
                         title: Text(aluno.nome),
+                        leading: CircleAvatar(
+                          child: Text(
+                            aluno.id.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.deepOrange,
+                          maxRadius: 12.0,
+                        ),
                       );
                     },
                   );
@@ -95,22 +83,8 @@ class _ViewCursoState extends State<ViewCurso> {
               },
             ),
           ),
-          Card(
-            color: Colors.deepOrange,
-            elevation: 0,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Lista de todos as disciplinas do curso",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          faixaCard(
+              Colors.deepOrange, "Lista de todos as disciplinas do curso"),
           Expanded(
             child: FutureBuilder<List>(
               future: HelperDisciplina.getInstance()
@@ -125,43 +99,14 @@ class _ViewCursoState extends State<ViewCurso> {
                       Disciplina disciplina = snapshot.data[index];
                       return ListTile(
                         title: Text(disciplina.nomeDisc),
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-          ),
-          Card(
-            color: Colors.deepOrange,
-            elevation: 0,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Lista de todos os professores do curso",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: FutureBuilder<List>(
-              future: HelperDisciplina.getInstance()
-                  .getAllFromCurso(widget.curso.id),
-              builder: (context, AsyncSnapshot<List> snapshot) {
-                if (!snapshot.hasData) {
-                  return LinearProgressIndicator();
-                } else {
-                  return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      Disciplina disciplina = snapshot.data[index];
-                      return ListTile(
-                        title: Text(disciplina.nomeDisc),
+                        leading: CircleAvatar(
+                          child: Text(
+                            disciplina.id.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.deepOrange,
+                          maxRadius: 12.0,
+                        ),
                       );
                     },
                   );

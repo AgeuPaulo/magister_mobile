@@ -65,6 +65,14 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
             Text(widget.edit ? "Editar Periodo Letivo" : "Novo Periodo Letivo"),
         centerTitle: true,
         backgroundColor: Colors.lightGreen,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: (){
+              onPressed();
+            },
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -120,8 +128,6 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
                         Colors.lightGreen,
                         initialValue: widget.edit ? widget.periodo.dataFinal : "f",
                         ),
-                    buttonSave(Colors.lightGreen, Colors.lightGreenAccent,
-                        context, onPressed),
                   ],
                 ),
               ),

@@ -74,7 +74,7 @@ class _EditCursoState extends State<EditAluno> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: (){
+            onPressed: () {
               onPressed();
             },
           )
@@ -104,32 +104,26 @@ class _EditCursoState extends State<EditAluno> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    formField(nomeController, "Nome do Aluno", Icons.person,
+                        TextInputType.text, Colors.indigoAccent,
+                        initialValue: widget.edit ? widget.aluno.nome : "s"),
                     formField(
-                        nomeController,
-                        "Nome do Aluno",
-                        Icons.person,
-                        TextInputType.text,
-                        Colors.indigoAccent,
-                         initialValue: widget.edit ? widget.aluno.nome : "s"),
+                      totalCreditoController,
+                      "total crédito",
+                      Icons.place,
+                      TextInputType.number,
+                      Colors.indigoAccent,
+                    ),
+                    formField(dataController, "Data de nascimento",
+                        Icons.person, TextInputType.text, Colors.indigoAccent,
+                        initialValue: widget.edit ? widget.aluno.nome : "d"),
                     formField(
-                        totalCreditoController,
-                        "total crédito",
-                        Icons.place,
-                        TextInputType.number,
-                        Colors.indigoAccent,),
-                    formField(
-                        dataController,
-                        "Data de nascimento",
-                        Icons.person,
-                        TextInputType.text,
-                        Colors.indigoAccent,
-                         initialValue: widget.edit ? widget.aluno.nome : "d"),
-                    formField(
-                        mgpController,
-                        "MGP",
-                        Icons.person,
-                        TextInputType.number,
-                        Colors.indigoAccent,),
+                      mgpController,
+                      "MGP",
+                      Icons.person,
+                      TextInputType.number,
+                      Colors.indigoAccent,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -144,23 +138,51 @@ class _EditCursoState extends State<EditAluno> {
                                 AsyncSnapshot<List> snapshot) {
                               if (!snapshot.hasData)
                                 return CircularProgressIndicator();
-                              return DropdownButton<Curso>(
-                                items: snapshot.data
-                                    .map((curso) => DropdownMenuItem<Curso>(
-                                          child: Text(curso.nomeCurso),
-                                          value: curso,
-                                        ))
-                                    .toList(),
-                                onChanged: (Curso value) {
-                                  setState(() {
-                                    selected = value;
-                                    idCursoController.text =
-                                        selected.id.toString();
-                                    current = value.nomeCurso;
-                                  });
-                                },
-                                isExpanded: false,
-                                hint: Text(current),
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                    right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.person,
+                                      color: Colors.indigoAccent,
+                                    ),
+                                    Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.indigoAccent,
+                                          accentColor: Colors.indigoAccent,
+                                          hintColor: Colors.indigoAccent),
+                                      child: DropdownButton<Curso>(
+                                        style: TextStyle(
+                                          color: Colors.indigoAccent,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        items: snapshot.data
+                                            .map((curso) =>
+                                                DropdownMenuItem<Curso>(
+                                                  child: Text(curso.nomeCurso),
+                                                  value: curso,
+                                                ))
+                                            .toList(),
+                                        onChanged: (Curso value) {
+                                          setState(() {
+                                            selected = value;
+                                            idCursoController.text =
+                                                selected.id.toString();
+                                            current = value.nomeCurso;
+                                          });
+                                        },
+                                        isExpanded: false,
+                                        hint: Text(current.toUpperCase()),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             }),
                       ),

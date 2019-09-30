@@ -39,14 +39,22 @@ class _HomeCursoState extends State<HomeCurso> {
                   onDismissed: (direction) {
                     HelperCurso.getInstance().delete(item.id);
                   },
-                  child: ListTile(
-                    title: Text(item.nomeCurso.toString()),
-                    subtitle: Text(item.totalCredito.toString()),
-                    leading: CircleAvatar(child: Text(item.id.toString()), backgroundColor: Colors.deepOrange,),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ViewCurso(curso: item)));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(item.nomeCurso.toString()),
+                      subtitle: Text(item.totalCredito.toString()),
+                      leading: CircleAvatar(
+                        child: Text(
+                          item.id.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.deepOrange,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ViewCurso(curso: item)));
+                      },
+                    ),
                   ),
                 );
               },
@@ -57,7 +65,7 @@ class _HomeCursoState extends State<HomeCurso> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
+          backgroundColor: Colors.deepOrange,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

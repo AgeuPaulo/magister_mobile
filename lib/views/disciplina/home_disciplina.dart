@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
 import 'package:magister_mobile/views/disciplina/edit_disciplina.dart';
+import 'package:magister_mobile/views/disciplina/view_disciplina.dart';
 
 class HomeDisciplina extends StatefulWidget {
   @override
@@ -9,7 +10,6 @@ class HomeDisciplina extends StatefulWidget {
 }
 
 class _HomeDisciplinaState extends State<HomeDisciplina> {
-
   @override
   void didUpdateWidget(HomeDisciplina oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -27,8 +27,7 @@ class _HomeDisciplinaState extends State<HomeDisciplina> {
       ),
       body: FutureBuilder<List>(
         future: HelperDisciplina.getInstance().getAll(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -41,16 +40,21 @@ class _HomeDisciplinaState extends State<HomeDisciplina> {
                   onDismissed: (direction) {
                     HelperDisciplina.getInstance().delete(item.id);
                   },
-                  child: ListTile(
-                    title: Text(item.nomeDisc.toString()),
-                    leading: CircleAvatar(backgroundColor: Colors.purple, child: Text(item.id.toString()),),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditDisciplina(
-                                true,
-                                disciplina: item,
-                              )));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(item.nomeDisc.toString()),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.purple,
+                        child: Text(item.id.toString(),
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ViewDisciplina(
+                                  disciplina: item,
+                                )));
+                      },
+                    ),
                   ),
                 );
               },
@@ -61,7 +65,7 @@ class _HomeDisciplinaState extends State<HomeDisciplina> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.purple,
+          backgroundColor: Colors.purple,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(

@@ -58,6 +58,14 @@ class _EditProfessorState extends State<EditProfessor> {
         title: Text(widget.edit ? "Editar Professor" : "Novo Professor"),
         centerTitle: true,
         backgroundColor: Colors.amber,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: (){
+              onPressed();
+            },
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -98,8 +106,6 @@ class _EditProfessorState extends State<EditProfessor> {
                         TextInputType.number,
                         Colors.amber,
                     ),
-                    buttonSave(
-                        Colors.amber, Colors.amberAccent, context, onPressed),
                   ],
                 ),
               ),

@@ -9,7 +9,6 @@ class HomeProfessor extends StatefulWidget {
 }
 
 class _HomeProfessorState extends State<HomeProfessor> {
-
   @override
   void didUpdateWidget(HomeProfessor oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -27,8 +26,7 @@ class _HomeProfessorState extends State<HomeProfessor> {
       ),
       body: FutureBuilder<List>(
         future: HelperProfessor.getInstance().getAll(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -41,17 +39,24 @@ class _HomeProfessorState extends State<HomeProfessor> {
                   onDismissed: (direction) {
                     HelperProfessor.getInstance().delete(item.id);
                   },
-                  child: ListTile(
-                    title: Text(item.nomeProf.toString()),
-                    subtitle: Text(item.matricula.toString()),
-                    leading: CircleAvatar(backgroundColor: Colors.amber, child: Text(item.id.toString())),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditProfessor(
-                                true,
-                                professor: item,
-                              )));
-                    },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(item.nomeProf.toString()),
+                      subtitle: Text(item.matricula.toString()),
+                      leading: CircleAvatar(
+                          backgroundColor: Colors.amber,
+                          child: Text(
+                            item.id.toString(),
+                            style: TextStyle(color: Colors.white),
+                          )),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditProfessor(
+                                  true,
+                                  professor: item,
+                                )));
+                      },
+                    ),
                   ),
                 );
               },
@@ -62,7 +67,7 @@ class _HomeProfessorState extends State<HomeProfessor> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amber,
+          backgroundColor: Colors.amber,
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).push(
