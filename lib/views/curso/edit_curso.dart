@@ -50,6 +50,7 @@ class _EditCursoState extends State<EditCurso> {
         idCoordenador: int.parse(idCoordenadorController.text),
       ));
       Navigator.pop(context);
+      Navigator.pop(context);
     } else {
       await HelperCurso.getInstance().save(
         new Curso(

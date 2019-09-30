@@ -5,6 +5,8 @@ import 'package:magister_mobile/data/helpers/helperprofessor.dart';
 import 'package:magister_mobile/data/models/aluno.dart';
 import 'package:magister_mobile/data/models/curso.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
+import 'package:magister_mobile/data/models/professor.dart';
+import 'package:magister_mobile/views/curso/edit_curso.dart';
 
 class ViewCurso extends StatefulWidget {
   final Curso curso;
@@ -15,29 +17,16 @@ class ViewCurso extends StatefulWidget {
 }
 
 class _ViewCursoState extends State<ViewCurso> {
-  HelperAluno helperAluno = new HelperAluno();
-  HelperDisciplina helperDisciplina = new HelperDisciplina();
   HelperProfessor helperProfessor = new HelperProfessor();
-  List<Disciplina> disciplinas = List();
-  List<Aluno> alunos = List();
+  Professor coordenador;
 
   @override
   void initState() {
     super.initState();
-    helperDisciplina.getAllFromCurso(widget.curso.id).then((list) {
+    helperProfessor.getFirst(widget.curso.idCoordenador).then((value) {
       setState(() {
-        disciplinas = list;
-        print(list);
+        coordenador = value;
       });
-      print(disciplinas);
-    });
-
-    helperAluno.getAllFromCurso(widget.curso.id).then((list) {
-      setState(() {
-        alunos = list;
-        print(list);
-      });
-      print(alunos);
     });
   }
 
@@ -49,13 +38,24 @@ class _ViewCursoState extends State<ViewCurso> {
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
         elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => EditCurso(true, curso: widget.curso)));
+            },
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
           Card(
             elevation: 0,
             child: ListTile(
-              title: Text(widget.curso.coordenador.toString()),
+              title: Text("Coordenador: " + coordenador.nomeProf),
+              subtitle: Text(
+                  "Total de créditos: " + widget.curso.totalCredito.toString()),
             ),
           ),
           Card(
@@ -75,16 +75,23 @@ class _ViewCursoState extends State<ViewCurso> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: alunos.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(alunos[index].nome),
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.deepOrange,
-                    child: Text(alunos[index].id.toString()),
-                  ),
-                );
+            child: FutureBuilder<List>(
+              future:
+                  HelperAluno.getInstance().getAllFromCurso(widget.curso.id),
+              builder: (context, AsyncSnapshot<List> snapshot) {
+                if (!snapshot.hasData) {
+                  return LinearProgressIndicator();
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      Aluno aluno = snapshot.data[index];
+                      return ListTile(
+                        title: Text(aluno.nome),
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
@@ -105,16 +112,23 @@ class _ViewCursoState extends State<ViewCurso> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: alunos.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(disciplinas[index].nomeDisc),
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.deepOrange,
-                    child: Text(disciplinas[index].id.toString()),
-                  ),
-                );
+            child: FutureBuilder<List>(
+              future: HelperDisciplina.getInstance()
+                  .getAllFromCurso(widget.curso.id),
+              builder: (context, AsyncSnapshot<List> snapshot) {
+                if (!snapshot.hasData) {
+                  return LinearProgressIndicator();
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      Disciplina disciplina = snapshot.data[index];
+                      return ListTile(
+                        title: Text(disciplina.nomeDisc),
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
@@ -132,6 +146,27 @@ class _ViewCursoState extends State<ViewCurso> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder<List>(
+              future: HelperDisciplina.getInstance()
+                  .getAllFromCurso(widget.curso.id),
+              builder: (context, AsyncSnapshot<List> snapshot) {
+                if (!snapshot.hasData) {
+                  return LinearProgressIndicator();
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      Disciplina disciplina = snapshot.data[index];
+                      return ListTile(
+                        title: Text(disciplina.nomeDisc),
+                      );
+                    },
+                  );
+                }
+              },
             ),
           ),
         ],
