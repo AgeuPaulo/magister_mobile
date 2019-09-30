@@ -49,6 +49,7 @@ class _EditCursoState extends State<EditAluno> {
         idCurso: int.parse(idCursoController.text),
       ));
       Navigator.pop(context);
+      Navigator.pop(context);
     } else {
       await HelperAluno.getInstance().save(
         new Aluno(
@@ -110,17 +111,17 @@ class _EditCursoState extends State<EditAluno> {
                     formField(
                       totalCreditoController,
                       "total crédito",
-                      Icons.place,
+                      Icons.apps,
                       TextInputType.number,
                       Colors.indigoAccent,
                     ),
                     formField(dataController, "Data de nascimento",
-                        Icons.person, TextInputType.text, Colors.indigoAccent,
+                        Icons.calendar_today, TextInputType.text, Colors.indigoAccent,
                         initialValue: widget.edit ? widget.aluno.nome : "d"),
                     formField(
                       mgpController,
                       "MGP",
-                      Icons.person,
+                      Icons.apps,
                       TextInputType.number,
                       Colors.indigoAccent,
                     ),
@@ -149,7 +150,7 @@ class _EditCursoState extends State<EditAluno> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Icon(
-                                      Icons.person,
+                                      Icons.school,
                                       color: Colors.indigoAccent,
                                     ),
                                     Theme(

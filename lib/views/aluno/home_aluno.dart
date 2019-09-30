@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magister_mobile/data/helpers/helperaluno.dart';
 import 'package:magister_mobile/data/models/aluno.dart';
 import 'package:magister_mobile/views/aluno/edit_aluno.dart';
+import 'package:magister_mobile/views/aluno/view_aluno.dart';
 
 class HomeAluno extends StatefulWidget {
   @override
@@ -49,8 +50,7 @@ class _HomeAlunoState extends State<HomeAluno> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EditAluno(
-                                  true,
+                            builder: (context) => ViewAluno(
                                   aluno: item,
                                 )));
                       },
