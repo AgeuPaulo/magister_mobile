@@ -53,6 +53,12 @@ class _ViewCursoState extends State<ViewCurso> {
       body: Column(
         children: <Widget>[
           Card(
+            elevation: 0,
+            child: ListTile(
+              title: Text(widget.curso.coordenador.toString()),
+            ),
+          ),
+          Card(
             color: Colors.deepOrange,
             elevation: 0,
             child: Center(

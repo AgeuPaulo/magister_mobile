@@ -53,8 +53,8 @@ abstract class HelperBase<T> {
         "${HelperTurma.idProfColumn} INTEGER,"
         "FOREIGN KEY(${HelperTurma.anoColumn}) REFERENCES ${HelperPeriodo.periodoTable}(${HelperPeriodo.anoColumn})," 
         "FOREIGN KEY(${HelperTurma.semestreColumn}) REFERENCES ${HelperPeriodo.periodoTable}(${HelperPeriodo.semestreColumn})," 
-        "FOREIGN KEY(${HelperTurma.semestreColumn}) REFERENCES ${HelperDisciplina.disciplinaTable}(${HelperDisciplina.idColumn})," 
+        "FOREIGN KEY(${HelperTurma.idDiscColumn}) REFERENCES ${HelperDisciplina.disciplinaTable}(${HelperDisciplina.idColumn})," 
         "FOREIGN KEY(${HelperTurma.idProfColumn}) REFERENCES ${HelperProfessor.professorTable}(${HelperProfessor.idColumn})," 
-        "PRIMARY KEY(${HelperTurma.anoColumn}, ${HelperTurma.semestreColumn}, ${HelperTurma.idDiscColumn})");
+        "PRIMARY KEY(${HelperTurma.anoColumn}, ${HelperTurma.semestreColumn}, ${HelperTurma.idDiscColumn}))");
   }
 }
