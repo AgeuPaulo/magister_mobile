@@ -33,6 +33,9 @@ class _EditCursoState extends State<EditAluno> {
       totalCreditoController.text = widget.aluno.totalCredito.toString();
       dataController.text = widget.aluno.dataNascimento.toString();
       mgpController.text = widget.aluno.mgp.toString();
+      HelperCurso.getInstance().getFirst(widget.aluno.idCurso).then((value) {
+        current = value.nomeCurso;
+      });
     }
   }
 
@@ -115,8 +118,12 @@ class _EditCursoState extends State<EditAluno> {
                       TextInputType.number,
                       Colors.indigoAccent,
                     ),
-                    formField(dataController, "Data de nascimento",
-                        Icons.calendar_today, TextInputType.text, Colors.indigoAccent,
+                    formField(
+                        dataController,
+                        "Data de nascimento",
+                        Icons.calendar_today,
+                        TextInputType.text,
+                        Colors.indigoAccent,
                         initialValue: widget.edit ? widget.aluno.nome : "d"),
                     formField(
                       mgpController,
@@ -163,10 +170,13 @@ class _EditCursoState extends State<EditAluno> {
                                           color: Colors.indigoAccent,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        items: snapshot.data.map((curso) => DropdownMenuItem<Curso>(
+                                        items: snapshot.data
+                                            .map((curso) =>
+                                                DropdownMenuItem<Curso>(
                                                   child: Text(curso.nomeCurso),
                                                   value: curso,
-                                                )).toList(),
+                                                ))
+                                            .toList(),
                                         onChanged: (Curso value) {
                                           setState(() {
                                             selected = value;

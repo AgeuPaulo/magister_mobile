@@ -34,6 +34,10 @@ class _EditDisciplinaState extends State<EditDisciplina> {
       creditoController.text = widget.disciplina.creditos.toString();
       tipoController.text = widget.disciplina.tipo.toString();
       hrsObgController.text = widget.disciplina.hrs.toString();
+      limiteFaltasController.text = widget.disciplina.limiteFaltas.toString();
+      HelperCurso.getInstance().getFirst(widget.disciplina.idCurso).then((value) {
+        current = value.nomeCurso;
+      });
     }
   }
 

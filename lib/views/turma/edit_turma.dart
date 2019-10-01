@@ -42,6 +42,9 @@ class _EditTurmaState extends State<EditTurma> {
     if (widget.edit == true) {
       vagasController.text = widget.turma.vagas.toString();
       visibilidade = false;
+      HelperProfessor.getInstance().getFirst(widget.turma.idProf).then((value){
+        currentProf = value.nomeProf;
+      });
     }
   }
 
