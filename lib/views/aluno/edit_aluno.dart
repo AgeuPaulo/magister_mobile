@@ -163,13 +163,10 @@ class _EditCursoState extends State<EditAluno> {
                                           color: Colors.indigoAccent,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        items: snapshot.data
-                                            .map((curso) =>
-                                                DropdownMenuItem<Curso>(
+                                        items: snapshot.data.map((curso) => DropdownMenuItem<Curso>(
                                                   child: Text(curso.nomeCurso),
                                                   value: curso,
-                                                ))
-                                            .toList(),
+                                                )).toList(),
                                         onChanged: (Curso value) {
                                           setState(() {
                                             selected = value;

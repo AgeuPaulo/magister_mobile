@@ -69,7 +69,7 @@ class HelperTurma extends HelperBase<Turma> {
   @override
   Future<int> update(Turma data) async => await db.then((database) {
         return database.update(turmaTable, data.toMap(),
-            where: "$anoColumn = ? AND $semestreColumn = ? AND $idDiscColumn = ?", whereArgs: [data.ano, data.semestre, data.ano]);
+            where: "$anoColumn = ? AND $semestreColumn = ? AND $idDiscColumn = ?", whereArgs: [data.ano, data.semestre, data.idDisc]);
       });
 
   @override
