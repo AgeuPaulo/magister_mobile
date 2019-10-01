@@ -19,6 +19,7 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
   TextEditingController dataInicioController = TextEditingController();
   TextEditingController dataFinalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool visibilidade = true;
 
   @override
   void initState() {
@@ -27,7 +28,8 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
       anoController.text = widget.periodo.ano.toString();
       semestreController.text = widget.periodo.semestre.toString();
       dataInicioController.text = widget.periodo.dataInicio;
-      dataFinalController.text = widget.periodo.dataInicio;
+      dataFinalController.text = widget.periodo.dataFinal;
+      visibilidade = false;
     }
   }
 
@@ -68,7 +70,7 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: (){
+            onPressed: () {
               onPressed();
             },
           )
@@ -98,36 +100,44 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    formField(
+                    Visibility(
+                      visible: visibilidade,
+                      child: formField(
                         anoController,
                         "Ano",
                         Icons.apps,
                         TextInputType.number,
                         Colors.lightGreen,
+                      ),
                     ),
-                    formField(
+                    Visibility(
+                      visible: visibilidade,
+                      child: formField(
                         semestreController,
                         "Semestre",
                         Icons.apps,
                         TextInputType.number,
                         Colors.lightGreen,
+                      ),
                     ),
                     formField(
-                        dataInicioController,
-                        "Data Inicio",
-                        Icons.date_range,
-                        TextInputType.text,
-                        Colors.lightGreen,
-                        initialValue: widget.edit ? widget.periodo.dataInicio : "i",
-                        ),
+                      dataInicioController,
+                      "Data Inicio",
+                      Icons.date_range,
+                      TextInputType.text,
+                      Colors.lightGreen,
+                      initialValue:
+                          widget.edit ? widget.periodo.dataInicio : "i",
+                    ),
                     formField(
-                        dataFinalController,
-                        "Data Final",
-                        Icons.date_range,
-                        TextInputType.text,
-                        Colors.lightGreen,
-                        initialValue: widget.edit ? widget.periodo.dataFinal : "f",
-                        ),
+                      dataFinalController,
+                      "Data Final",
+                      Icons.date_range,
+                      TextInputType.text,
+                      Colors.lightGreen,
+                      initialValue:
+                          widget.edit ? widget.periodo.dataFinal : "f",
+                    ),
                   ],
                 ),
               ),

@@ -25,6 +25,7 @@ class _EditTurmaState extends State<EditTurma> {
   TextEditingController idDiscController = new TextEditingController();
   TextEditingController vagasController = new TextEditingController();
   TextEditingController idProfController = new TextEditingController();
+  bool visibilidade = true;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -40,6 +41,7 @@ class _EditTurmaState extends State<EditTurma> {
     super.initState();
     if (widget.edit == true) {
       vagasController.text = widget.turma.vagas.toString();
+      visibilidade = false;
     }
   }
 
@@ -155,7 +157,8 @@ class _EditTurmaState extends State<EditTurma> {
                                       onChanged: (Professor value) {
                                         setState(() {
                                           selectedProf = value;
-                                          idProfController.text = selectedProf.id.toString();
+                                          idProfController.text =
+                                              selectedProf.id.toString();
                                           currentProf = value.nomeProf;
                                         });
                                       },
@@ -169,133 +172,145 @@ class _EditTurmaState extends State<EditTurma> {
                           }),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.teal, width: 1),
-                      ),
-                      child: FutureBuilder<List>(
-                          future: HelperDisciplina.getInstance().getAll(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List> snapshot) {
-                            if (!snapshot.hasData)
-                              return CircularProgressIndicator();
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8.0, top: 4.0, bottom: 4.0, right: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.school,
-                                    color: Colors.teal,
-                                  ),
-                                  Theme(
-                                    data: new ThemeData(
-                                        primaryColor: Colors.teal,
-                                        accentColor: Colors.teal,
-                                        hintColor: Colors.teal),
-                                    child: DropdownButton<Disciplina>(
-                                      style: TextStyle(
-                                        color: Colors.teal,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      items: snapshot.data
-                                          .map((disciplina) =>
-                                              DropdownMenuItem<Disciplina>(
-                                                child:
-                                                    Text(disciplina.nomeDisc),
-                                                value: disciplina,
-                                              ))
-                                          .toList(),
-                                      onChanged: (Disciplina value) {
-                                        setState(() {
-                                          selectedDisci = value;
-                                          idDiscController.text =
-                                              selectedDisci.id.toString();
-                                          currentDisc = value.nomeDisc;
-                                        });
-                                      },
-                                      isExpanded: false,
-                                      hint: Text(currentDisc),
+                  Visibility(
+                    visible: visibilidade,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.teal, width: 1),
+                        ),
+                        child: FutureBuilder<List>(
+                            future: HelperDisciplina.getInstance().getAll(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List> snapshot) {
+                              if (!snapshot.hasData)
+                                return CircularProgressIndicator();
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                    right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.school,
+                                      color: Colors.teal,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+                                    Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.teal,
+                                          accentColor: Colors.teal,
+                                          hintColor: Colors.teal),
+                                      child: DropdownButton<Disciplina>(
+                                        style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        items: snapshot.data
+                                            .map((disciplina) =>
+                                                DropdownMenuItem<Disciplina>(
+                                                  child:
+                                                      Text(disciplina.nomeDisc),
+                                                  value: disciplina,
+                                                ))
+                                            .toList(),
+                                        onChanged: (Disciplina value) {
+                                          setState(() {
+                                            selectedDisci = value;
+                                            idDiscController.text =
+                                                selectedDisci.id.toString();
+                                            currentDisc = value.nomeDisc;
+                                          });
+                                        },
+                                        isExpanded: false,
+                                        hint: Text(currentDisc),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.teal, width: 1),
-                      ),
-                      child: FutureBuilder<List>(
-                          future: HelperPeriodo.getInstance().getAll(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List> snapshot) {
-                            if (!snapshot.hasData)
-                              return CircularProgressIndicator();
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8.0, top: 4.0, bottom: 4.0, right: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.school,
-                                    color: Colors.teal,
-                                  ),
-                                  Theme(
-                                    data: new ThemeData(
-                                        primaryColor: Colors.teal,
-                                        accentColor: Colors.teal,
-                                        hintColor: Colors.teal),
-                                    child: DropdownButton<PeriodoLetivo>(
-                                      style: TextStyle(
-                                        color: Colors.teal,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      items: snapshot.data
-                                          .map((periodo) =>
-                                              DropdownMenuItem<PeriodoLetivo>(
-                                                child: Text(
-                                                    periodo.ano.toString() +
-                                                        "." +
-                                                        periodo.semestre
-                                                            .toString()),
-                                                value: periodo,
-                                              ))
-                                          .toList(),
-                                      onChanged: (PeriodoLetivo value) {
-                                        setState(() {
-                                          selectedPeriodo = value;
-                                          anoController.text =
-                                              selectedPeriodo.ano.toString();
-                                          semestreController.text =
-                                              selectedPeriodo.semestre
-                                                  .toString();
-                                          currentPeriodo =
-                                              value.ano.toString() +
-                                                  "." +
-                                                  value.semestre.toString();
-                                        });
-                                      },
-                                      isExpanded: false,
-                                      hint: Text(currentPeriodo),
+                  Visibility(
+                    visible: visibilidade,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.teal, width: 1),
+                        ),
+                        child: FutureBuilder<List>(
+                            future: HelperPeriodo.getInstance().getAll(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List> snapshot) {
+                              if (!snapshot.hasData)
+                                return CircularProgressIndicator();
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    top: 4.0,
+                                    bottom: 4.0,
+                                    right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.school,
+                                      color: Colors.teal,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+                                    Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.teal,
+                                          accentColor: Colors.teal,
+                                          hintColor: Colors.teal),
+                                      child: DropdownButton<PeriodoLetivo>(
+                                        style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        items: snapshot.data
+                                            .map((periodo) =>
+                                                DropdownMenuItem<PeriodoLetivo>(
+                                                  child: Text(
+                                                      periodo.ano.toString() +
+                                                          "." +
+                                                          periodo.semestre
+                                                              .toString()),
+                                                  value: periodo,
+                                                ))
+                                            .toList(),
+                                        onChanged: (PeriodoLetivo value) {
+                                          setState(() {
+                                            selectedPeriodo = value;
+                                            anoController.text =
+                                                selectedPeriodo.ano.toString();
+                                            semestreController.text =
+                                                selectedPeriodo.semestre
+                                                    .toString();
+                                            currentPeriodo =
+                                                value.ano.toString() +
+                                                    "." +
+                                                    value.semestre.toString();
+                                          });
+                                        },
+                                        isExpanded: false,
+                                        hint: Text(currentPeriodo),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
                     ),
                   ),
                 ],
