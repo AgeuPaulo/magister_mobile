@@ -72,8 +72,7 @@ class HelperProfessor extends HelperBase<Professor> {
                                             "INNER JOIN ${HelperTurma.turmaTable} AS turma ON turma.${HelperTurma.idProfColumn } = prof.${HelperProfessor.idColumn} "
                                             "INNER JOIN ${HelperDisciplina.disciplinaTable} AS disc ON disc.${HelperDisciplina.idColumn} = turma.${HelperTurma.idDiscColumn} "
                                             "INNER JOIN ${HelperCurso.cursoTable} AS curso ON curso.${HelperCurso.idColumn} = disc.${HelperDisciplina.idCursoColumn} "
-                                            "WHERE curso.${HelperCurso.idColumn} = $idCurso");
-                                            
+                                            "WHERE curso.${HelperCurso.idColumn} = $idCurso");                                 
     List<Professor> listProf = List();
     for (Map m in listMap) {
       listProf.add(Professor.fromMap(m));
