@@ -114,6 +114,36 @@ class _ViewCursoState extends State<ViewCurso> {
               },
             ),
           ),
+          faixaCard(
+              Colors.deepOrange, "Lista de todos os  professores do curso"),
+          Expanded(
+            child: FutureBuilder<List>(
+              future: HelperProfessor.getInstance().getAllProfFromCurso(widget.curso.id),
+              builder: (context, AsyncSnapshot<List> snapshot) {
+                if (!snapshot.hasData) {
+                  return LinearProgressIndicator();
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      Professor professor = snapshot.data[index];
+                      return ListTile(
+                        title: Text(professor.nomeProf),
+                        leading: CircleAvatar(
+                          child: Text(
+                            professor.id.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.deepOrange,
+                          maxRadius: 12.0,
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

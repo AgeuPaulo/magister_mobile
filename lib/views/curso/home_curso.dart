@@ -42,7 +42,7 @@ class _HomeCursoState extends State<HomeCurso> {
                   child: Card(
                     child: ListTile(
                       title: Text(item.nomeCurso.toString()),
-                      subtitle: Text(item.totalCredito.toString()),
+                      subtitle: Text("Credito: " + item.totalCredito.toString()),
                       leading: CircleAvatar(
                         child: Text(
                           item.id.toString(),

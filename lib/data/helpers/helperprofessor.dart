@@ -1,4 +1,7 @@
 import 'package:magister_mobile/data/helpers/helperbase.dart';
+import 'package:magister_mobile/data/helpers/helpercurso.dart';
+import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
+import 'package:magister_mobile/data/helpers/helperturma.dart';
 import 'package:magister_mobile/data/models/professor.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -56,6 +59,20 @@ class HelperProfessor extends HelperBase<Professor> {
   Future<List> getAll() async {
     Database dbContact = await db;
     List listMap = await dbContact.rawQuery("SELECT * FROM $professorTable");
+    List<Professor> listProf = List();
+    for (Map m in listMap) {
+      listProf.add(Professor.fromMap(m));
+    }
+    return listProf;
+  }
+
+  Future<List> getAllProfFromCurso(int idCurso) async {
+    Database dbContact = await db;
+    List listMap = await dbContact.rawQuery("SELECT DISTINCT prof.${HelperProfessor.idColumn}, prof.${HelperProfessor.nomeColumn}, prof.${HelperProfessor.matriculaColumn} FROM $professorTable AS prof "
+                                            "INNER JOIN ${HelperTurma.turmaTable} AS turma ON turma.${HelperTurma.idProfColumn } = prof.${HelperProfessor.idColumn} "
+                                            "INNER JOIN ${HelperDisciplina.disciplinaTable} AS disc ON disc.${HelperDisciplina.idColumn} = turma.${HelperTurma.idDiscColumn} "
+                                            "INNER JOIN ${HelperCurso.cursoTable} AS curso ON curso.${HelperCurso.idColumn} = disc.${HelperDisciplina.idCursoColumn} "
+                                            "WHERE curso.${HelperCurso.idColumn} = $idCurso");
     List<Professor> listProf = List();
     for (Map m in listMap) {
       listProf.add(Professor.fromMap(m));
