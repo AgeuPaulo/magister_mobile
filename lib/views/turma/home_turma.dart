@@ -45,9 +45,6 @@ class _HomeTurmaState extends State<HomeTurma> {
                     child: ListTile(
                       title: Text(
                           item.ano.toString() + "." + item.semestre.toString()),
-                      subtitle: Text(item.idDisc.toString() +
-                          " - " +
-                          item.idProf.toString()),
                       leading: CircleAvatar(
                           backgroundColor: Colors.teal,
                           child: Text(
