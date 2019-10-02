@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:masked_text/masked_text.dart';
 
 Widget faixaCard(Color color, String title) {
   return Card(
@@ -161,3 +162,37 @@ Widget formField(TextEditingController controller, String label, IconData icon,
     ),
   );
 }
+
+Widget formFieldMask(TextEditingController controller, String label, IconData icon,
+    TextInputType type, Color color, int maxlength,
+    {String initialValue}) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: color, width: 1),
+      ),
+      child: Theme(
+        data: new ThemeData(
+            primaryColor: color, accentColor: color, hintColor: color),
+        child: MaskedTextField(
+          keyboardType: type,
+          maxLength: maxlength,
+          mask: "xx/xx/xxxx",
+          maskedTextFieldController: controller,
+          inputDecoration: InputDecoration(
+            border: InputBorder.none,
+            prefixIcon: Icon(icon),
+            labelText: label.toUpperCase(),
+            labelStyle: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+

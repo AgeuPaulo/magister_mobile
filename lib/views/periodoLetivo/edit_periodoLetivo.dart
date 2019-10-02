@@ -120,21 +120,23 @@ class _EditPeriodoLetivoState extends State<EditPeriodoLetivo> {
                         Colors.lightGreen,
                       ),
                     ),
-                    formField(
+                    formFieldMask(
                       dataInicioController,
                       "Data Inicio",
                       Icons.date_range,
-                      TextInputType.text,
+                      TextInputType.datetime,
                       Colors.lightGreen,
+                      10,
                       initialValue:
                           widget.edit ? widget.periodo.dataInicio : "i",
                     ),
-                    formField(
+                    formFieldMask(
                       dataFinalController,
                       "Data Final",
                       Icons.date_range,
-                      TextInputType.text,
+                      TextInputType.datetime,
                       Colors.lightGreen,
+                      10,
                       initialValue:
                           widget.edit ? widget.periodo.dataFinal : "f",
                     ),
