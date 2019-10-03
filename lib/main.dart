@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magister_mobile/views/aluno/home_aluno.dart';
 import 'package:magister_mobile/views/curso/home_curso.dart';
 import 'package:magister_mobile/views/disciplina/home_disciplina.dart';
+import 'package:magister_mobile/views/matricula/home_matricula.dart';
 import 'package:magister_mobile/views/periodoLetivo/home_periodoLetivo.dart';
 import 'package:magister_mobile/views/professor/home_professor.dart';
 import 'package:magister_mobile/views/turma/home_turma.dart';
@@ -46,6 +47,7 @@ class Home extends StatelessWidget {
             menuCard(Icons.school, "Período Letivo", Colors.lightGreen, HomePeriodoLetivo(), context),
             menuCard(Icons.school, "Discilinas", Colors.purple, HomeDisciplina(), context),
             menuCard(Icons.school, "Turma", Colors.teal, HomeTurma(), context),
+            menuCard(Icons.school, "Matricula", Colors.lime, HomeMatricula(), context),
           ],
         ),
       ),

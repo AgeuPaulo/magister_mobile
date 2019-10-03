@@ -7,6 +7,7 @@ import 'package:magister_mobile/data/models/curso.dart';
 import 'package:magister_mobile/data/models/disciplina.dart';
 import 'package:magister_mobile/data/models/professor.dart';
 import 'package:magister_mobile/views/curso/edit_curso.dart';
+import 'package:magister_mobile/views/matricula/edit_matricula.dart';
 import 'package:magister_mobile/views/util/widgetUtil.dart';
 
 class ViewCurso extends StatefulWidget {
@@ -67,6 +68,9 @@ class _ViewCursoState extends State<ViewCurso> {
                     itemBuilder: (context, index) {
                       Aluno aluno = snapshot.data[index];
                       return ListTile(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditMatricula(false, aluno: aluno,)));
+                        },
                         title: Text(aluno.nome),
                         leading: CircleAvatar(
                           child: Text(

@@ -1,6 +1,7 @@
 import 'package:magister_mobile/data/helpers/helperaluno.dart';
 import 'package:magister_mobile/data/helpers/helpercurso.dart';
 import 'package:magister_mobile/data/helpers/helperdisciplina.dart';
+import 'package:magister_mobile/data/helpers/helpermatricula.dart';
 import 'package:magister_mobile/data/helpers/helperperiodo.dart';
 import 'package:magister_mobile/data/helpers/helperprofessor.dart';
 import 'package:magister_mobile/data/helpers/helperturma.dart';
@@ -56,5 +57,17 @@ abstract class HelperBase<T> {
         "FOREIGN KEY(${HelperTurma.idDiscColumn}) REFERENCES ${HelperDisciplina.disciplinaTable}(${HelperDisciplina.idColumn})," 
         "FOREIGN KEY(${HelperTurma.idProfColumn}) REFERENCES ${HelperProfessor.professorTable}(${HelperProfessor.idColumn})," 
         "PRIMARY KEY(${HelperTurma.anoColumn}, ${HelperTurma.semestreColumn}, ${HelperTurma.idDiscColumn}))");
+    await db.execute(
+        "CREATE TABLE IF NOT EXISTS ${HelperMatricula.matriculaTable}(${HelperMatricula.idAlunoColumn} INTEGER,"
+        "${HelperMatricula.turmaAnoColumn} INTEGER," 
+        "${HelperMatricula.turmaSemestreColumn} INTEGER,"
+        "${HelperMatricula.turmaIdDiscColumn} INTEGER,"
+        "${HelperMatricula.nota1Column} DOUBLE,"
+        "${HelperMatricula.nota2Column} DOUBLE,"
+        "FOREIGN KEY(${HelperMatricula.idAlunoColumn}) REFERENCES ${HelperAluno.alunoTable}(${HelperAluno.idColumn})," 
+        "FOREIGN KEY(${HelperMatricula.turmaAnoColumn}) REFERENCES ${HelperTurma.turmaTable}(${HelperTurma.anoColumn})," 
+        "FOREIGN KEY(${HelperMatricula.turmaSemestreColumn}) REFERENCES ${HelperTurma.turmaTable}(${HelperTurma.semestreColumn})," 
+        "FOREIGN KEY(${HelperMatricula.turmaIdDiscColumn}) REFERENCES ${HelperTurma.turmaTable}(${HelperTurma.idDiscColumn})," 
+        "PRIMARY KEY(${HelperMatricula.idAlunoColumn}, ${HelperMatricula.turmaAnoColumn}, ${HelperMatricula.turmaSemestreColumn}, ${HelperMatricula.turmaIdDiscColumn}))");
   }
 }
